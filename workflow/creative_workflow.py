@@ -4,8 +4,11 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import StateGraph
 from langgraph.graph.graph import CompiledGraph
 
+from language.language_node import Language
 from structure.state import CreativeWriterState
 from language_recognition.node import detect_language
+
+from translate.translate_node import Translate
 
 
 class CreativeWriter:
@@ -47,13 +50,9 @@ class CreativeWriter:
         self.graph_builder: StateGraph = StateGraph(CreativeWriterState)
         self.graph: CompiledGraph = self._compile_graph()
 
-    def translate(self, state: CreativeWriterState) -> CreativeWriterState:
-        return state
-
-    def write_next_scene(self, state: CreativeWriterState) -> CreativeWriterState:
-        return state
-
     def _compile_graph(self) -> CompiledGraph:
-        self.graph_builder.add_node("translate", self.translate)
+        language = Language()
+        translate = Translate()
+        self.graph_builder.add_node("translate", translate.run)
         self.graph_builder.add_node("write_next_scene", self.write_next_scene)
-        self.graph_builder.add_node("check_language", detect_language)
+        self.graph_builder.add_node("language", language.run)

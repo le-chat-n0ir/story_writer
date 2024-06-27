@@ -39,8 +39,8 @@ class Translate(BaseNode):
                 ),
                 (
                     cls.AI,
-                    "The sun is shining bright and warm. "
-                    "A butterfly flies over a meadow, and gently settles on a flower.",
+                    "{{'translation': 'The sun is shining bright and warm. "
+                    "A butterfly flies over a meadow, and gently settles on a flower.'}}",
                 ),
                 (
                     cls.USER,
@@ -48,7 +48,8 @@ class Translate(BaseNode):
                 ),
                 (
                     cls.AI,
-                    "Lana sat down on the graceful wooden chair, and let her gaze wander through the café.",
+                    "{{'translation': 'Lana sat down on the graceful wooden chair, and let her gaze wander through the "
+                    "café.'}}",
                 ),
                 (
                     cls.USER,
@@ -93,8 +94,8 @@ if __name__ == "__main__":
                 steps=[
                     WriterStep(
                         message=HumanMessage(
-                            content="Die Sonne scheint hell und warm. "
-                            "Ein Schmetterling fliegt über eine Wiese, und setzt sich zärtlich auf eine Blume."
+                            content="Regen prasselte gegen die Fensterscheiben, und der Wind heulte um das Haus. "
+                            "Drinnen saß Lana am Kamin und las ein Buch."
                         ),
                         step_type=StepType.NODE,
                         message_type=MessageType.USER_INPUT,
@@ -102,10 +103,6 @@ if __name__ == "__main__":
                 ]
             )
         )
+        .steps[-1]
+        .message.content
     )
-    #
-    # print(
-    #     Translate.make_chain().invoke(
-    #         {Translate.INPUT: "Die Sonne scheint hell und warm."}
-    #     )
-    # )

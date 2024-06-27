@@ -5,6 +5,7 @@ from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import BaseOutputParser, JsonOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableSerializable
+from base.writer_state import WriterState, WriterStep, MessageType, StepType
 
 
 class BaseNode(ABC):
@@ -19,7 +20,7 @@ class BaseNode(ABC):
     HISTORY: Final[str] = "history"
     INPUT: Final[str] = "input"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._model = self._make_model()
         self._prompt = self._make_prompt()
         self._output_parser = self._make_output_parser()
@@ -56,5 +57,5 @@ class BaseNode(ABC):
         return cls._make_prompt() | cls._make_model() | cls._make_output_parser()
 
     @abstractmethod
-    def run(self):
+    def run(self, state: WriterState) -> WriterState:
         pass

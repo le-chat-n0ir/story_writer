@@ -11,6 +11,8 @@ class StepType(str, Enum):
     START = "start"
     NODE = "node"
     TRANSLATE = "translate"
+    LANGUAGE = "language"
+    WRITE = "write"
 
 
 class MessageType(str, Enum):
@@ -18,6 +20,7 @@ class MessageType(str, Enum):
     USER_INPUT = "input"
     AI_RESPONSE = "response"
     TRANSLATED = "translated"
+    NEEDS_TRANSLATION = "needs_translation"
 
 
 class WriterStep(BaseModel):
